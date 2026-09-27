@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMind AI - Specialized Educational Assistant & Tutor</title>
+
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">EduMind <span class="brand-accent">AI</span></span>
+                    <span class="brand-tagline">Educational Learning Hub</span>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <div class="domain-badge">
+                    <span class="badge-dot"></span>
+                    <i class="fa-solid fa-book-bookmark"></i> Education Domain
+                </div>
+                <button id="clear-chat-btn" class="btn btn-outline" title="Clear conversation history">
+                    <i class="fa-solid fa-broom"></i> Clear Chat
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-layout">
+        <!-- Hero Banner Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI-Powered Academic Companion
+                </div>
+                <h1 class="hero-title">Elevate Your Learning with <span class="gradient-text">EduMind AI</span></h1>
+                <p class="hero-subtitle">
+                    Get instant, step-by-step solutions, homework help, concept breakdowns, and study roadmaps tailored to your academic needs.
+                </p>
+
+                <!-- Quick Prompt Chips -->
+                <div class="prompt-chips-container">
+                    <span class="chips-label"><i class="fa-solid fa-lightbulb"></i> Try asking:</span>
+                    <div class="chips-grid">
+                        <button class="chip" data-prompt="Explain Quantum Physics simply for a high school student">
+                            <i class="fa-solid fa-atom"></i> Quantum Physics Explained
+                        </button>
+                        <button class="chip" data-prompt="Create a 7-day revision schedule for AP Calculus">
+                            <i class="fa-solid fa-calculator"></i> Calculus Study Plan
+                        </button>
+                        <button class="chip" data-prompt="How does Photosynthesis work step-by-step?">
+                            <i class="fa-solid fa-seedling"></i> Photosynthesis Guide
+                        </button>
+                        <button class="chip" data-prompt="Help me write an outline for a history essay on World War II">
+                            <i class="fa-solid fa-scroll"></i> History Essay Outline
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat Container Card -->
+        <section class="chat-section">
+            <div class="chat-card">
+                <!-- Chat Card Header -->
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <div class="tutor-avatar-sm">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h3 class="chat-title">EduMind Learning Studio</h3>
+                            <span class="status-indicator">
+                                <span class="status-dot online"></span> Specialized Academic Model Ready
+                            </span>
+                        </div>
+                    </div>
+                    <div class="header-badges">
+                        <span class="pill-tag"><i class="fa-solid fa-shield-halved"></i> Domain Restricted</span>
+                    </div>
+                </div>
+
+                <!-- Chat Messages Scroll Area -->
+                <div id="chat-history" class="chat-history">
+                    <!-- Default Welcome Message -->
+                    <div class="message-wrapper bot-wrapper">
+                        <div class="avatar bot-avatar">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="message-bubble bot-bubble">
+                            <div class="message-header">
+                                <span class="sender-name">EduMind Tutor</span>
+                                <span class="message-time">Just now</span>
+                            </div>
+                            <div class="message-text">
+                                Hello! 👋 Welcome to <strong>EduMind AI</strong>. I am your specialized AI Learning Tutor. 
+                                <br><br>
+                                I can assist you with:
+                                <ul>
+                                    <li>📚 <strong>Homework &amp; Subjects:</strong> Math, Physics, Chemistry, Biology, History, Literature, Coding.</li>
+                                    <li>🎯 <strong>Exam Preparation:</strong> Summaries, practice questions, and study strategies.</li>
+                                    <li>💡 <strong>Concept Clarification:</strong> Simple breakdowns of complex topics with examples.</li>
+                                    <li>📝 <strong>Writing &amp; Essays:</strong> Structure, outlines, grammar advice, and research planning.</li>
+                                </ul>
+                                <em>What subject or question would you like to explore today?</em>
+                            </div>
+                            <button class="copy-btn" title="Copy response to clipboard">
+                                <i class="fa-regular fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Animation Indicator -->
+                <div id="typing-indicator" class="typing-indicator hidden">
+                    <div class="avatar bot-avatar-sm">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="typing-bubble">
+                        <span class="typing-text">EduMind is generating response</span>
+                        <div class="dots-loader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Controls -->
+                <div class="chat-input-container">
+                    <form id="chat-form" class="chat-form">
+                        <div class="input-wrapper">
+                            <textarea 
+                                id="user-input" 
+                                class="chat-input" 
+                                placeholder="Ask any educational question... (e.g., Explain Newton's Third Law)" 
+                                rows="1"
+                                required
+                            ></textarea>
+                            <button type="submit" id="send-btn" class="send-btn" title="Send message">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="input-footer-note">
+                        <i class="fa-solid fa-circle-info"></i> EduMind exclusively answers questions related to academics and learning. Press <strong>Enter</strong> to send.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <span id="toast-message">Message copied to clipboard!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <i class="fa-solid fa-graduation-cap"></i> EduMind AI Platform
+            </div>
+            <p class="footer-text">
+                Designed for students, educators, and lifelong learners. Powered by Flask & OpenRouter API.
+            </p>
+            <div class="footer-tags">
+                <span><i class="fa-solid fa-check"></i> Asynchronous Flask</span>
+                <span><i class="fa-solid fa-check"></i> OpenRouter Integration</span>
+                <span><i class="fa-solid fa-check"></i> Education Guardrails</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
